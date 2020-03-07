@@ -12,18 +12,18 @@ function App() {
   var sorted = soccer.sort((a: any, b: any) => a.Name.localeCompare(b.Name));
   var mapped = sorted.map((a: any) =>
     <tr key={a.Name} id={a.Name} onClick={() => selectPlayer(a)}>
-      <td>{a.Name}</td>
-      <td>{a.Nationality}</td>
-      <td>{a.National_Position}</td>
-      <td>{a.Club}</td>
-      <td>{a.Height}</td>
-      <td>{a.Preffered_Foot}</td>
+      <td id='col1'>{a.Name}</td>
+      <td id='col2'>{a.Nationality}</td>
+      <td id='col3'>{a.National_Position}</td>
+      <td id='col4'>{a.Club}</td>
+      <td id='col5'>{a.Height}</td>
+      <td id='col6'>{a.Preffered_Foot}</td>
     </tr>);
   
   return (
     <div className="App">
       <header className="App-header">
-        <h1>datavsiyn-coding-challenge</h1>
+        <h1>datavisyn-coding-challenge</h1>
       </header>
 
       <div className="Table">
