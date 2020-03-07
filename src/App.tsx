@@ -1,14 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
+import ReactDOM from 'react-dom';
 import './App.css';
 import { Radar } from 'react-chartjs-2';
+
+var data: any;
+var selectedRow: HTMLElement;
 
 function App() {
 
   const soccer = require('./soccer_small.json');
   var sorted = soccer.sort((a: any, b: any) => a.Name.localeCompare(b.Name));
   var mapped = sorted.map((a: any) =>
-    <tr onClick={() => showDetails(a)}>
+    <tr key={a.Name} id={a.Name} onClick={() => selectPlayer(a)}>
       <td>{a.Name}</td>
       <td>{a.Nationality}</td>
       <td>{a.National_Position}</td>
@@ -16,87 +19,95 @@ function App() {
       <td>{a.Height}</td>
       <td>{a.Preffered_Foot}</td>
     </tr>);
-
+  
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>datavsiyn-coding-challenge</h1>
       </header>
 
       <div className="Table">
-        <table id="table">
-          <thead>
+        <table>
+          <thead className="TableHeader">
             <tr>
-              <th>Name</th>
-              <th>Nationality</th>
-              <th>National Position</th>
-              <th>Club</th>
-              <th>Height</th>
-              <th>Preferred Foot</th>
+              <th id='col1'>Name</th>
+              <th id='col2'>Nationality</th>
+              <th id='col3'>National Position</th>
+              <th id='col4'>Club</th>
+              <th id='col5'>Height</th>
+              <th id='col6'>Preferred Foot</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="TableRows">
             {mapped}
           </tbody>
         </table>
       </div>
  
-      
-      <div className="Details">
-        <h1>Name23</h1>
-        <Radar
-          data={data} 
-          width={500}
-          height={500}
-          options={{ maintainAspectRatio: false }}
-        />
-      </div>
-
+      <div id="chart"/>
     </div>
   );
 }
 
-const data = {
-  labels: ['Ball Control', 'Dribbling', 'Aggression', 'Acceleration', 'Speed', 'Shot Power'],
-  datasets: [
-    {
-      // label: 'Player1',
-      backgroundColor: 'rgba(179,181,198,0.2)',
-      borderColor: 'rgba(179,181,198,1)',
-      pointBackgroundColor: 'rgba(179,181,198,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(179,181,198,1)',
-      data: [65, 59, 90, 81, 56, 55]
-    },
-    // {
-    //   label: 'My Second dataset',
-    //   backgroundColor: 'rgba(255,99,132,0.2)',
-    //   borderColor: 'rgba(255,99,132,1)',
-    //   pointBackgroundColor: 'rgba(255,99,132,1)',
-    //   pointBorderColor: '#fff',
-    //   pointHoverBackgroundColor: '#fff',
-    //   pointHoverBorderColor: 'rgba(255,99,132,1)',
-    //   data: [28, 48, 40, 19, 96, 27]
-    // }
-  ]
-};
+function selectPlayer(a: any) {
 
-function showDetails(a: any) {
   console.log(a.Name + " selected");
 
+  // row selection
+  if(selectedRow != null) {selectedRow.classList.remove("selectedRow");}
+  var element = document.getElementById(a.Name);
+  if (element != null){
+    element.classList.add("selectedRow");
+    selectedRow = element;
+  }
 
+  var color = 'rgba(37,122,206,1)';
+
+  data = {
+    labels: ['Ball Control', 'Dribbling', 'Aggression', 'Acceleration', 'Speed', 'Shot Power'],
+    datasets: [
+      {
+        label: a.Name,
+        backgroundColor: 'rgba(179,181,198,0.2)',
+        borderColor: color,
+        pointBackgroundColor: color,
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: color,
+        data: [a.Ball_Control, a.Dribbling, a.Aggression,a.Acceleration,a.Speed,a.Shot_Power]
+      },
+    ]
+  };
+
+  ReactDOM.render(
+    <SpiderChart />,
+    document.getElementById('chart')
+  );
+  
+}
+
+function SpiderChart() {
+
+  // Spider chart Options
+  let options = {
+    scale: {
+      ticks: {
+        suggestedMin: 0,
+        suggestedMax: 100
+      }
+    }  
+  }
+
+  return(
+    <div className="Details">
+        <Radar
+          data={data} 
+          width={500}
+          height={500}        
+          options = {options}
+        />
+      </div>
+  )
 }
 
 export default App;
