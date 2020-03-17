@@ -18,45 +18,54 @@
 
 .Table{
   float: left;
-  margin-top: 200px;
+  margin-top: 198px;
   padding: 20px;
+  padding-top: 0px;
   text-align: left;
+  width: 800px;
+  border-color: white;
 }
 
-/* .TableHeader{
+.TableHeader{
   position: fixed;
-  padding: 20px;
+  padding-top: 20px;
   text-align: left;
   float: left;
-} */
-
-#col1 {
-  width: 30%;
-}
-
-#col2 {
-  width: 20%;
-}
-
-#col3 {
-  width: 10%;
-}
-
-#col4 {
-  width: 20%;
-}
-
-#col5 {
-  width: 10%;
-}
-
-#col6 {
-  width: 10%;
+  background-color: white;
+  width: 800px;
 }
 
 .TableRows{
+  padding-top: 100px;
+  top: 80px;
   cursor: pointer;
 }
+
+#col1 {
+  width: 200px;
+}
+
+#col2 {
+  width: 160px;
+}
+
+#col3 {
+  width: 80px;
+}
+
+#col4 {
+  width: 160px;
+}
+
+#col5 {
+  width: 80px;
+}
+
+#col6 {
+  width: 80px;
+}
+
+
 
 .selectedRow{
   background-color: rgba(37,122,206,1);

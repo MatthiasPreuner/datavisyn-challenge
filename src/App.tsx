@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './App.css';
 import { Radar } from 'react-chartjs-2';
 
-var data: any;
+var data: {labels: any, datasets:any[]};
 var selectedRow: HTMLElement;
 
 function App() {
@@ -20,6 +20,8 @@ function App() {
       <td id='col6'>{a.Preffered_Foot}</td>
     </tr>);
   
+  data = {labels:['Ball Control', 'Dribbling', 'Aggression', 'Acceleration', 'Speed', 'Shot Power'],datasets:[]};
+
   return (
     <div className="App">
       <header className="App-header">
@@ -63,21 +65,17 @@ function selectPlayer(a: any) {
 
   var color = 'rgba(37,122,206,1)';
 
-  data = {
-    labels: ['Ball Control', 'Dribbling', 'Aggression', 'Acceleration', 'Speed', 'Shot Power'],
-    datasets: [
-      {
-        label: a.Name,
-        backgroundColor: 'rgba(179,181,198,0.2)',
-        borderColor: color,
-        pointBackgroundColor: color,
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: color,
-        data: [a.Ball_Control, a.Dribbling, a.Aggression,a.Acceleration,a.Speed,a.Shot_Power]
-      },
-    ]
-  };
+  data.datasets.shift()
+  data.datasets.push( {
+    label: a.Name,
+    backgroundColor: 'rgba(179,181,198,0.2)',
+    borderColor: color,
+    pointBackgroundColor: color,
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: color,
+    data: [a.Ball_Control, a.Dribbling, a.Aggression,a.Acceleration,a.Speed,a.Shot_Power]
+  });
 
   ReactDOM.render(
     <SpiderChart />,
